@@ -6,6 +6,12 @@ public class ListaDoble<E> extends ListaSimple<E> {
 
     protected NodoDoble<E> nodoTail;
 
+    //Adicionar
+    /**
+     * Adiciona un elemento a la lista.
+     *
+     * @param dato Object
+     */
     @Override
     public void adicionarElemento(E dato) {
         NodoDoble<E> nodo_entrada = new NodoDoble<>(dato);
@@ -18,42 +24,65 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Adiciona un elemento a la lista en una posición especifica.
+     *
+     * @param dato Object
+     * @param posicion int
+     */
     @Override
     public void adicionarElemento(E dato, int posicion) {
         if (!estaVacia()) {
             if (posicion < longitud()) {
                 NodoDoble<E> nodo_entrada = new NodoDoble<>(dato); //Crea un nodo con el parametro
                 NodoDoble<E> nodo_actual = (NodoDoble) nodoHead; //Nodo recorredor (Pointer)
+                NodoDoble<E> nodo_preActual = null; //Nodo recorredor (Pointer)
                 int index = 0; //Indica la posición durante el recorrido
-                while (nodo_actual != null) {
-                    if (index == posicion - 1) { //Si la posición es la anterior a la buscada
-                        //Los nodos posteriores a nodo entrada serán iguales a los nodos posteriores al actual
-                        nodo_entrada.siguiente = nodo_actual.siguiente;
-                        //El nodo precio al nodo entrada será el nodo actual
-                        nodo_entrada.previo = nodo_actual;
-                        //El nodo siguiente al actual será remplazado con el nodo entrada
-                        nodo_actual.siguiente = nodo_entrada;
-                        break;
+                if (posicion == 0) {
+                    adicionarInicio(dato);
+                } else if (posicion == longitud() - 1) {
+                    adicionarFinal(dato);
+                } else {
+                    while (nodo_actual != null) {
+                        if (index == posicion) { //Si la posición es la buscada
+                            nodo_entrada.previo = nodo_actual.previo;
+                            nodo_entrada.siguiente = nodo_actual;
+                            nodo_actual.previo = nodo_entrada;
+                            nodo_preActual.siguiente = nodo_entrada;
+                            break;
+                        }
+                        nodo_preActual = nodo_actual;
+                        nodo_actual = (NodoDoble) nodo_actual.siguiente;
+                        index++;
                     }
-                    nodo_actual = (NodoDoble) nodo_actual.siguiente;
-                    nodo_actual.previo = nodo_actual;
-                    index++;
                 }
+
             }
         }
     }
 
+    /**
+     * Adiciona un elemento al inicio de la lista.
+     *
+     * @param dato Object
+     */
     @Override
     public void adicionarInicio(E dato) {
         if (!estaVacia()) {
             NodoDoble<E> nodo_entrada = new NodoDoble<>(dato); //Crea un nodo con el parametro
             nodo_entrada.siguiente = nodoHead;
+            ((NodoDoble) nodoHead).previo = nodo_entrada;
             nodoHead = nodo_entrada;
         } else {
             adicionarElemento(dato);
         }
     }
 
+    /**
+     * Adiciona un elemento al final de la lista.
+     *
+     * @param dato Object
+     */
     @Override
     public void adicionarFinal(E dato) {
         if (!estaVacia()) {
@@ -66,6 +95,14 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    //Eliminar
+    /**
+     * Elimina elementos de la lista.
+     *
+     * @param dato Object
+     * @param eliminar_todos Si es true se eliminan todas la apariciones del
+     * elemento en la lista
+     */
     @Override
     public void eliminarElemento(E dato, boolean eliminar_todos) {
         if (!estaVacia()) {
@@ -95,10 +132,45 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    public void eliminarElemento(E dato, int aparicion) {
+        if (!estaVacia()) {
+            if (aparicion > 0 && aparicion <= apariciones(dato)) {
+                NodoDoble<E> nodo_actual = (NodoDoble) nodoHead; //Nodo recorredor (Pointer)
+                NodoDoble<E> nodo_preActual = null; //Nodo previo al recorredor (Pointer)
+                int aparicion_aux = 0; //Contador de apariciones del dato en la lista
+                while (nodo_actual != null) {
+                    if (nodo_actual.dato.equals(dato)) {
+                        aparicion_aux++;
+                    }
+                    if (aparicion_aux == aparicion && nodo_preActual == null) { //Si se llegó a la enésima aparición & es el nodo Head
+                        eliminarInicial();
+                        break;
+                    } else if (aparicion_aux == aparicion && nodo_actual.siguiente == null) { //Si se llegó a la enésima aparición & es el nodo Tail
+                        eliminarUltimo();
+                        break;
+                    } else if (aparicion_aux == aparicion && nodo_preActual != null) { //Si se llegó a la enésima aparición & no es el nodo Head
+                        nodo_preActual.siguiente = nodo_actual.siguiente;
+                        ((NodoDoble<E>) nodo_actual.siguiente).previo = nodo_preActual;
+                        break;
+                    }
+                    nodo_preActual = nodo_actual;
+                    nodo_actual = (NodoDoble) nodo_actual.siguiente;
+                }
+            }
+        }
+    }
+
+    /**
+     * Elimina elementos de la lista en una posición especifica.
+     *
+     * @param posicion int
+     * @param eliminar_todos Si es true se eliminan todas la apariciones del
+     * elemento en la lista
+     */
     @Override
     public void eliminarElemento(int posicion, boolean eliminar_todos) {
         if (!estaVacia()) {
-            if (posicion >= 0 && posicion < longitud()) { //Si la posición es valida
+            if (posicion >= 0 && posicion < longitud()) { //Si la posición es valida, positiva
                 if (eliminar_todos) {
                     E dato = buscar(posicion); //Dato a eliminar
                     while (apariciones(dato) > 0) { //Mientras quede alguno
@@ -125,10 +197,36 @@ public class ListaDoble<E> extends ListaSimple<E> {
                         }
                     }
                 }
+            } else if (posicion < 0 && (posicion * -1) <= longitud()) { //Si la posición es negativa y menor o igual a la longitud
+                NodoDoble<E> nodo_actual = (NodoDoble) nodoTail; //Nodo recorredor (Pointer)
+                NodoDoble<E> nodo_preActual = null; //Nodo previo al recorredor (Pointer)
+                int index = -1; //Iniciando en la última posición
+                if ((posicion * -1) == longitud()) { //Si es el nodo Head
+                    eliminarInicial();
+                } else if (posicion == -1) { //Si es el nodo Tail
+                    eliminarUltimo();
+                } else { //Si es un nodo intermedio
+                    while (nodo_actual != null) {
+                        if (index == posicion) {
+                            nodo_preActual.previo = nodo_actual.previo;
+                            nodo_actual.previo.siguiente = nodo_actual.siguiente;
+                            break;
+                        }
+                        nodo_preActual = nodo_actual;
+                        nodo_actual = nodo_actual.previo;
+                        index--;
+                    }
+                }
             }
         }
     }
 
+    /**
+     * Elimina los elementos en un intervalo especifico.
+     *
+     * @param posicionX int - posición inicial del intervalo
+     * @param posicionY int - posición final del intervalo
+     */
     @Override
     public void eliminarElemento(int posicionX, int posicionY) {
         if (!estaVacia()) {
@@ -175,6 +273,9 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Elimina el primer elemento de la lista.
+     */
     @Override
     public void eliminarInicial() {
         if (!estaVacia()) {
@@ -183,6 +284,9 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Elimina el último elemento de la lista.
+     */
     @Override
     public void eliminarUltimo() {
         if (!estaVacia()) {
@@ -191,6 +295,13 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    //Buscar
+    /**
+     * Busca la posición de un elemento especificado.
+     *
+     * @param dato Object
+     * @return int - posición en la lista
+     */
     @Override
     public int buscar(E dato) {
         if (!estaVacia()) {
@@ -209,6 +320,12 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca un dato en la lista en una posición especificada.
+     *
+     * @param posicion int
+     * @return Object - dato en la posición especificada
+     */
     @Override
     public E buscar(int posicion) {
         if (!estaVacia()) {
@@ -231,11 +348,18 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca los elementos de la lista en un intervalo dentro de ella.
+     *
+     * @param posicionX inicio del intervalo a buscar
+     * @param posicionY fin del intervalo a buscar
+     * @return ListaDoble<> - Sublista en el intervalo determinado
+     */
     @Override
-    public ListaSimple buscar(int posicionX, int posicionY) {
+    public ListaDoble buscar(int posicionX, int posicionY) {
         if (!estaVacia()) {
             if (posicionX >= 0 & posicionY < longitud() & posicionX <= posicionY) {
-                ListaSimple<E> lista_resultado = new ListaSimple<>();
+                ListaDoble<E> lista_resultado = new ListaDoble<>();
                 NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
                 int index = 0;
                 while (nodo_actual != null) { //Recorrido de nodos
@@ -257,6 +381,11 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca el primer elemento de la lista.
+     *
+     * @return Object en la primera posición
+     */
     @Override
     public E buscarInicial() {
         if (!estaVacia()) {
@@ -266,6 +395,11 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca el penúltimo elemento de la lista.
+     *
+     * @return Object en la penúltima posición
+     */
     @Override
     public E buscarPreFinal() {
         if (!estaVacia() && longitud() > 1) {
@@ -275,6 +409,11 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca el último elemento de la lista.
+     *
+     * @return Object en la última posición
+     */
     @Override
     public E buscarFinal() {
         if (!estaVacia()) {
@@ -284,6 +423,12 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca todas las posiciones en las que se encuentra un elemento.
+     *
+     * @param dato Object - dato a buscar
+     * @return ListaSimple<Integer> - posiciones
+     */
     @Override
     public ListaSimple buscarTodos(E dato) {
         if (!estaVacia()) {
@@ -303,6 +448,104 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * Busca el elemento previo a un elemento especifico, si aparece múltiples
+     * veces en la lita se tendrá más de un elemento previo, exactamente uno
+     * para cada vez que aparezca el dato en la lista.
+     *
+     * @param dato Object - dato a buscar
+     * @return ListaSimple<Integer> - posiciones
+     */
+    public ListaSimple<E> buscarPrevios(E dato) {
+        if (!estaVacia()) {
+            ListaSimple<E> lista_previos = new ListaSimple<>();
+            NodoDoble<E> nodo_actual = (NodoDoble) nodoHead; //Nodo recorredor (Pointer)
+            while (nodo_actual != null) { //Hasta el último nodo
+                if (nodo_actual.dato.equals(dato)) { //Si hay una coincidencia
+                    if (nodo_actual.previo != null) {
+                        lista_previos.adicionarElemento(nodo_actual.previo.dato); //Agrega la posición a la lista
+                    } else {
+                        lista_previos.adicionarElemento(null);
+                    }
+                }
+                nodo_actual = (NodoDoble) nodo_actual.siguiente;
+            }
+            return lista_previos;
+        } else {
+            return null; //Si está vacia
+        }
+    }
+
+    //Sustituir
+    /**
+     * Sustituye un dato especificado con otro.
+     *
+     * @param dato_sustituir Object - dato que será sustituido
+     * @param dato_sustituto Object - dato que sustituirá al dato sustituir
+     * @param sustituir_todos boolean - Si es true sustituye todos los datos
+     * iguales al dato_sustituir con el dato_sustituto
+     */
+    @Override
+    public void sustituir(E dato_sustituir, E dato_sustituto, boolean sustituir_todos) {
+        if (!estaVacia()) {
+            if (sustituir_todos) {
+                while (apariciones(dato_sustituir) > 0) {
+                    sustituir(dato_sustituir, dato_sustituto, false);
+                }
+            } else {
+                NodoDoble<E> nodo_actual = (NodoDoble) nodoHead; //Nodo recorredor (Pointer)
+                int index = 0; //Indica la posición durante el recorrido
+                while (nodo_actual != null) {
+                    if (nodo_actual.dato.equals(dato_sustituir)) { //Si el dato coincide con el dato a eliminar
+                        nodo_actual.dato = dato_sustituto;
+                    }
+                    nodo_actual = (NodoDoble) nodo_actual.siguiente;
+                }
+            }
+        }
+    }
+
+    /**
+     * Sustituye un dato en una posición especificada con otro especificado.
+     *
+     * @param posicion int - posición del dato a sustituir
+     * @param dato_sustituto Object - dato que sustituirá al dato sustituir
+     * @param sustituir_todos boolean - Si es true sustituye todos los datos
+     * iguales al dato en la posición posicion con el dato_sustituto
+     */
+    @Override
+    public void sustituir(int posicion, E dato_sustituto, boolean sustituir_todos) {
+        if (!estaVacia()) {
+            if (sustituir_todos) {
+                E dato = buscar(posicion); //Dato a sustituir
+                while (apariciones(dato) > 0) {
+                    sustituir(buscar(posicion), dato_sustituto, false);
+                }
+            } else {
+                if (posicion < longitud()) {
+                    NodoDoble<E> nodo_actual = (NodoDoble) nodoHead; //Nodo recorredor (Pointer)
+                    int index = 0; //Indica la posición durante el recorrido
+                    while (nodo_actual != null) {
+                        if (index == posicion) { //Si la posición es la buscada
+                            nodo_actual.dato = dato_sustituto;
+                        }
+                        nodo_actual = (NodoDoble) nodo_actual.siguiente;
+                        index++;
+                    }
+                }
+            }
+
+        }
+    }
+
+    //Mover
+    /**
+     * Intercambia dos elementos de la lista entre sí indicados por sus
+     * posiciones.
+     *
+     * @param posicionX
+     * @param posicionY
+     */
     @Override
     public void mover(int posicionX, int posicionY) {
         if (!estaVacia()) {
@@ -315,6 +558,7 @@ public class ListaDoble<E> extends ListaSimple<E> {
                     int index = 0;
                     nodoY.siguiente = (NodoDoble) nodoHead.siguiente; //El los nodos siguientes a Y son remplazados con los siguientes al Head
                     nodoY.previo = null;
+                    ((NodoDoble) nodoHead.siguiente).previo = nodoY;
                     nodoHead = nodoY; //El nodo Head es remplazado con el nodo Y
                     while (index < posicionY) { //Hasta llegar al nodoY en la lista
                         nodo_preActual = nodo_actual;
@@ -323,9 +567,12 @@ public class ListaDoble<E> extends ListaSimple<E> {
                     }
                     nodoX.siguiente = nodo_actual.siguiente; //Los nodos siguientes al nodo X son remplazados con los siguientes al actual
                     nodoX.previo = nodo_actual.previo;
-                    if (nodo_preActual != null) {
-                        nodo_preActual.siguiente = nodoX; //El nodo actual es remplazado con el nodo X
+                    if (nodo_actual.siguiente != null) {
+                        ((NodoDoble) nodo_actual.siguiente).previo = nodoX;
+                    } else {
+                        nodoTail = nodoX;
                     }
+                    nodo_preActual.siguiente = nodoX; //El nodo actual es remplazado con el nodo X
                 } else {
                     NodoDoble<E> nodoX = new NodoDoble<>(buscar(posicionX)); //Crea un nodo con el dato del nodo de partida
                     NodoDoble<E> nodoY = new NodoDoble<>(buscar(posicionY)); //Crea un nodo con el dato del nodo de llegada
@@ -338,7 +585,8 @@ public class ListaDoble<E> extends ListaSimple<E> {
                         index++;
                     }
                     nodoY.siguiente = nodo_actual.siguiente; //Los nodos siguientes a Y serán los nodos siguientes al actual
-                    nodoY.previo = nodo_actual.previo; //Los nodos previos a Y serán los nodos previos al actaul
+                    nodoY.previo = nodo_actual.previo; //Los nodos previos a Y serán los nodos previos al actual
+                    ((NodoDoble) nodo_actual.siguiente).previo = nodoY;
                     nodo_preActual.siguiente = nodoY; //El nodo actual es remplazado por el nodo Y
                     while (index < posicionY) { //Hasta llegar al nodoY en la lista
                         nodo_preActual = nodo_actual;
@@ -347,12 +595,24 @@ public class ListaDoble<E> extends ListaSimple<E> {
                     }
                     nodoX.siguiente = nodo_actual.siguiente; //Los nodos siguientes a X serán los nodos siguientes al actual
                     nodoX.previo = nodo_actual.previo; //Los nodos previos a X serán los nodos previos al actaul
+                    if (nodo_actual.siguiente != null) {
+                        ((NodoDoble) nodo_actual.siguiente).previo = nodoY;
+                    } else {
+                        nodoTail = nodoX;
+                    }
                     nodo_preActual.siguiente = nodoX; //El nodo actual es remplazado por el nodo X
                 }
             }
         }
     }
 
+    //Información de la lista
+    /**
+     * Calcula el número de apariciones de un elemento en la lista.
+     *
+     * @param dato Object
+     * @return int - número de apariciones
+     */
     @Override
     public int apariciones(E dato) {
         if (!estaVacia()) {
@@ -370,6 +630,11 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    /**
+     * retorna la longitud de la lista.
+     *
+     * @return int - longitud de la lista
+     */
     @Override
     public int longitud() {
         NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
@@ -381,6 +646,11 @@ public class ListaDoble<E> extends ListaSimple<E> {
         return num_nodos;
     }
 
+    /**
+     * Retorna el estado de la lista.
+     *
+     * @return boolean - true si está vacia
+     */
     @Override
     public boolean estaVacia() {
         return nodoHead == null & nodoTail == null;
@@ -399,6 +669,28 @@ public class ListaDoble<E> extends ListaSimple<E> {
             lista += nodoHead.toString(); //Agrega el nodo Head
             while (nodo_actual.siguiente != null) { //Siempre que no sea el último nodo
                 nodo_actual = (NodoDoble) nodo_actual.siguiente; //Avanza un nodo
+                lista += ", " + nodo_actual.toString(); //Agrega el nodo al String
+            }
+            lista += "]"; //Cierra la lista
+            return lista;
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Retorna un String con todos los elementos contenidos en la lista desde el
+     * último al primero.
+     *
+     * @return String - elementos de la lista
+     */
+    public String reverseToString() {
+        if (!estaVacia()) {
+            String lista = "[";
+            NodoDoble<E> nodo_actual = nodoTail; //Nodo recorredor (Pointer)
+            lista += nodoTail.toString(); //Agrega el nodo Tail
+            while (nodo_actual.previo != null) { //Siempre que no sea el primer nodo
+                nodo_actual = nodo_actual.previo; //Avanza un nodo
                 lista += ", " + nodo_actual.toString(); //Agrega el nodo al String
             }
             lista += "]"; //Cierra la lista

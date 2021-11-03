@@ -10,9 +10,12 @@ public class Test3 {
         adicionar al inicio y al final, eliminar una vez, eliminar por posicion una vez,
         eliminar en un intervalo de posiciones, eliminar al inicio y al final, buscar por dato,
         buscar por posición, buscar por intervalo de posiciones, buscar penúltimo y pultimo, 
-        mover un elemento de una posición X a una Y.*/
+        mover un elemento de una posición X a una Y, sustituir un elemento en una posición especificada
+        con un elemento especificado.*/
 
         ListaDoble<Integer> numeros = new ListaDoble<>();
+        Integer a = 2020;
+        int b = 8;
 
         //Adición
         System.out.println(">> Adicionando ([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])...");
@@ -27,49 +30,63 @@ public class Test3 {
         numeros.adicionarElemento(90);
         numeros.adicionarElemento(100);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Adicionando en posición especifica (Num2020)(Pos5)...");
         numeros.adicionarElemento(2020, 5);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Adicionando al inicio (Num0)...");
         numeros.adicionarInicio(0);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Adicionando al final (Num110)...");
         numeros.adicionarFinal(110);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         //Eliminación
         System.out.println("\n>> Eliminando dato una vez (Num2020)...");
-        Integer a = 2020;
         numeros.eliminarElemento(a, false);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Eliminando dato por posición una vez (Pos8)...");
-        int b = 8;
         numeros.eliminarElemento(b, false);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
+        System.out.println("Elementos contenidos: " + numeros.longitud());
+
+        System.out.println("\n>> Eliminando dato por posición negativa una vez (Pos-5)...");
+        b = -5;
+        numeros.eliminarElemento(b, false);
+        System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Eliminando datos en un intervalo de posiciones (Pos3,Pos5)...");
         numeros.eliminarElemento(3, 5);
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Eliminando al inicio...");
         numeros.eliminarInicial();
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         System.out.println("\n>> Eliminando al final...");
         numeros.eliminarUltimo();
         System.out.println("Números: " + numeros.toString());
+        System.out.println("Números reverso: " + numeros.reverseToString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
 
         //Búsqueda
@@ -92,10 +109,32 @@ public class Test3 {
         System.out.println("Números: " + numeros.toString());
         System.out.println("Último dato: " + numeros.buscarFinal());
 
-        System.out.println("\n>> Mover dato (Pos0,Pos4)...");
-        System.out.println("Datos a mover: " + numeros.buscar((int) 0) + "-" + numeros.buscar((int) 4));
+        //Mover
+        System.out.println("\n>> Mover dato (Pos1,Pos4)...");
+        System.out.println("Datos a mover: " + numeros.buscar((int) 1) + "-" + numeros.buscar((int) 4));
         System.out.println("Números antes: " + numeros.toString());
-        numeros.mover(0, 4);
+        System.out.println("Números reverso antes: " + numeros.reverseToString());
+        System.out.println("------------------------------------------------");
+        numeros.mover(1, 4);
         System.out.println("Números después: " + numeros.toString());
+        System.out.println("Números reverso después: " + numeros.reverseToString());
+
+        //Sustituir
+        System.out.println("\n>> Sustituyendo un dato especificado con otro dato (Num10,Num1)...");
+        System.out.println("Números antes: " + numeros.toString());
+        System.out.println("Números reverso antes: " + numeros.reverseToString());
+        System.out.println("------------------------------------------------");
+        numeros.sustituir((Integer) 10, (Integer) 1, false);
+        System.out.println("Números después: " + numeros.toString());
+        System.out.println("Números reverso después: " + numeros.reverseToString());
+        
+        System.out.println("\n>> Sustituyendo un dato en una posición especifica (Pos3,Num0)...");
+        System.out.println("Dato a sustituir: " + numeros.buscar((int) 3));
+        System.out.println("Números antes: " + numeros.toString());
+        System.out.println("Números reverso antes: " + numeros.reverseToString());
+        System.out.println("------------------------------------------------");
+        numeros.sustituir((int) 3, (Integer) 0, false);
+        System.out.println("Números después: " + numeros.toString());
+        System.out.println("Números reverso después: " + numeros.reverseToString());
     }
 }

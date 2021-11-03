@@ -1,14 +1,15 @@
 package cuc.edu.listas;
 
 public class ListaSimple<E> implements Lista<E> {
-
+    
     protected NodoSimple<E> nodoHead;
 
     //Adicionar
     /**
-    * Adiciona un elemento a la lista.
-    * @param dato Object
-    */
+     * Adiciona un elemento a la lista.
+     *
+     * @param dato Object
+     */
     @Override
     public void adicionarElemento(E dato) {
         if (estaVacia()) { //Si está vacía
@@ -20,10 +21,11 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Adiciona un elemento a la lista en una posición especifica.
-    * @param dato Object
-    * @param posicion int
-    */
+     * Adiciona un elemento a la lista en una posición especifica.
+     *
+     * @param dato Object
+     * @param posicion int
+     */
     @Override
     public void adicionarElemento(E dato, int posicion) {
         if (posicion < 0) { //Si la posición no es valida
@@ -52,9 +54,10 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Adiciona un elemento al inicio de la lista.
-    * @param dato Object
-    */
+     * Adiciona un elemento al inicio de la lista.
+     *
+     * @param dato Object
+     */
     @Override
     public void adicionarInicio(E dato) {
         if (!estaVacia()) { //Sino está vacía
@@ -68,9 +71,10 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Adiciona un elemento al final de la lista.
-    * @param dato Object
-    */
+     * Adiciona un elemento al final de la lista.
+     *
+     * @param dato Object
+     */
     @Override
     public void adicionarFinal(E dato) {
         if (!estaVacia()) {
@@ -88,10 +92,12 @@ public class ListaSimple<E> implements Lista<E> {
 
     //Eliminar
     /**
-    * Elimina elementos de la lista.
-    * @param dato Object
-    * @param eliminar_todos Si es true se eliminan todas la apariciones del elemento en la lista
-    */
+     * Elimina elementos de la lista.
+     *
+     * @param dato Object
+     * @param eliminar_todos Si es true se eliminan todas la apariciones del
+     * elemento en la lista
+     */
     @Override
     public void eliminarElemento(E dato, boolean eliminar_todos) {
         if (!estaVacia()) {
@@ -117,19 +123,21 @@ public class ListaSimple<E> implements Lista<E> {
             }
         }
     }
-    
+
     /**
-    * Elimina elementos de la lista en una posición especifica.
-    * @param posicion int
-    * @param eliminar_todos Si es true se eliminan todas la apariciones del elemento en la lista
-    */
+     * Elimina elementos de la lista en una posición especifica.
+     *
+     * @param posicion int
+     * @param eliminar_todos Si es true se eliminan todas la apariciones del
+     * elemento en la lista
+     */
     @Override
     public void eliminarElemento(int posicion, boolean eliminar_todos) {
         if (!estaVacia()) {
             if (posicion < 0) {
-
+                
             } else if (posicion >= longitud()) {
-
+                
             } else if (posicion == 0) {
                 eliminarInicial();
             } else {
@@ -157,10 +165,11 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Elimina los elementos en un intervalo especifico.
-    * @param posicionX int - posición inicial del intervalo
-    * @param posicionY int - posición final del intervalo
-    */
+     * Elimina los elementos en un intervalo especifico.
+     *
+     * @param posicionX int - posición inicial del intervalo
+     * @param posicionY int - posición final del intervalo
+     */
     @Override
     public void eliminarElemento(int posicionX, int posicionY) {
         if (!estaVacia()) {
@@ -206,8 +215,8 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Elimina el primer elemento de la lista.
-    */
+     * Elimina el primer elemento de la lista.
+     */
     @Override
     public void eliminarInicial() {
         if (!estaVacia()) {
@@ -216,8 +225,8 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Elimina el último elemento de la lista.
-    */
+     * Elimina el último elemento de la lista.
+     */
     @Override
     public void eliminarUltimo() {
         NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
@@ -230,16 +239,17 @@ public class ListaSimple<E> implements Lista<E> {
             nodo_preActual.siguiente = null;
         }
         if (!estaVacia()) {
-
+            
         }
     }
 
     //Buscar
     /**
-    * Busca la posición de un elemento especificado.
-    * @param dato Object
-    * @return int - posición en la lista
-    */
+     * Busca la posición de un elemento especificado.
+     *
+     * @param dato Object
+     * @return int - posición en la lista
+     */
     @Override
     public int buscar(E dato) {
         if (!estaVacia()) {
@@ -259,10 +269,11 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Busca un dato en la lista en una posición especificada.
-    * @param posicion int
-    * @return Object - dato en la posición especificada
-    */
+     * Busca un dato en la lista en una posición especificada.
+     *
+     * @param posicion int
+     * @return Object - dato en la posición especificada
+     */
     @Override
     public E buscar(int posicion) {
         if (!estaVacia()) {
@@ -286,11 +297,12 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Busca los elementos de la lista en un intervalo dentro de ella.
-    * @param posicionX inicio del intervalo a buscar
-    * @param posicionY fin del intervalo a buscar
-    * @return ListaSimple<E> - Sublista en el intervalo determinado
-    */
+     * Busca los elementos de la lista en un intervalo dentro de ella.
+     *
+     * @param posicionX inicio del intervalo a buscar
+     * @param posicionY fin del intervalo a buscar
+     * @return ListaSimple<> - Sublista en el intervalo determinado
+     */
     @Override
     public ListaSimple<E> buscar(int posicionX, int posicionY) {
         if (!estaVacia()) {
@@ -318,9 +330,10 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Busca el primer elemento de la lista.
-    * @return Object en la primera posición
-    */
+     * Busca el primer elemento de la lista.
+     *
+     * @return Object en la primera posición
+     */
     @Override
     public E buscarInicial() {
         if (!estaVacia()) {
@@ -331,9 +344,10 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Busca el penúltimo elemento de la lista.
-    * @return Object en la penúltima posición
-    */
+     * Busca el penúltimo elemento de la lista.
+     *
+     * @return Object en la penúltima posición
+     */
     @Override
     public E buscarPreFinal() {
         if (!estaVacia() && longitud() > 1) {
@@ -342,7 +356,7 @@ public class ListaSimple<E> implements Lista<E> {
             while (nodo_actual.siguiente != null) { //Hasta el último nodo
                 nodo_preActual = nodo_actual;
                 nodo_actual = nodo_actual.siguiente;
-
+                
             }
             if (nodo_preActual != null) {
                 return nodo_preActual.dato;
@@ -354,9 +368,10 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Busca el último elemento de la lista.
-    * @return Object en la última posición
-    */
+     * Busca el último elemento de la lista.
+     *
+     * @return Object en la última posición
+     */
     @Override
     public E buscarFinal() {
         if (!estaVacia() && longitud() > 1) {
@@ -371,10 +386,11 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Busca todas las posiciones en las que se encuentra un elemento.
-    * @param dato Object - dato a buscar
-    * @return ListaSimple<Integer> - posiciones
-    */
+     * Busca todas las posiciones en las que se encuentra un elemento.
+     *
+     * @param dato Object - dato a buscar
+     * @return ListaSimple<Integer> - posiciones
+     */
     @Override
     public ListaSimple<Integer> buscarTodos(E dato) {
         if (!estaVacia()) {
@@ -394,13 +410,62 @@ public class ListaSimple<E> implements Lista<E> {
         }
     }
 
-    //Mover elementos
+    //Sustituir
     /**
-    * Intercambia dos elementos de la lista entre sí indicados
-    * por sus posiciones.
-    * @param posicionX
-    * @param posicionY
-    */
+     * Sustituye un dato especificado con otro.
+     *
+     * @param dato_sustituir Object - dato que será sustituido
+     * @param dato_sustituto Object - dato que sustituirá al dato sustituir
+     * @param sustituir_todos boolean - Si es true sustituye todos los datos
+     * iguales al dato_sustituir con el dato_sustituto
+     */
+    @Override
+    public void sustituir(E dato_sustituir, E dato_sustituto, boolean sustituir_todos) {
+        if (!estaVacia()) {
+            NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
+            int index = 0; //Indica la posición durante el recorrido
+            while (nodo_actual != null) {
+                if (nodo_actual.dato.equals(dato_sustituir)) { //Si el dato coincide con el dato a eliminar
+                    nodo_actual.dato = dato_sustituto;
+                }
+                nodo_actual = nodo_actual.siguiente;
+            }
+        }
+    }
+
+    /**
+     * Sustituye un dato en una posición especificada con otro especificado.
+     *
+     * @param posicion int - posición del dato a sustituir
+     * @param dato_sustituto Object - dato que sustituirá al dato sustituir
+     * @param sustituir_todos boolean - Si es true sustituye todos los datos
+     * iguales al dato en la posición posicion con el dato_sustituto
+     */
+    @Override
+    public void sustituir(int posicion, E dato_sustituto, boolean sustituir_todos) {
+        if (!estaVacia()) {
+            if (posicion < longitud()) {
+                NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
+                int index = 0; //Indica la posición durante el recorrido
+                while (nodo_actual != null) {
+                    if (index == posicion) { //Si la posición es la buscada
+                        nodo_actual.dato = dato_sustituto;
+                    }
+                    nodo_actual = nodo_actual.siguiente;
+                    index++;
+                }
+            }
+        }
+    }
+
+    //Mover
+    /**
+     * Intercambia dos elementos de la lista entre sí indicados por sus
+     * posiciones.
+     *
+     * @param posicionX
+     * @param posicionY
+     */
     @Override
     public void mover(int posicionX, int posicionY) {
         if (!estaVacia()) {
@@ -454,10 +519,11 @@ public class ListaSimple<E> implements Lista<E> {
 
     //Información de la lista
     /**
-    * Calcula el número de apariciones de un elemento en la lista.
-    * @param dato Object
-    * @return int - número de apariciones
-    */
+     * Calcula el número de apariciones de un elemento en la lista.
+     *
+     * @param dato Object
+     * @return int - número de apariciones
+     */
     @Override
     public int apariciones(E dato) {
         if (!estaVacia()) {
@@ -476,9 +542,10 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * retorna la longitud de la lista.
-    * @return int - longitud de la lista
-    */
+     * retorna la longitud de la lista.
+     *
+     * @return int - longitud de la lista
+     */
     @Override
     public int longitud() {
         NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
@@ -491,18 +558,20 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
-    * Retorna el estado de la lista.
-    * @return boolean - true si está vacia
-    */
+     * Retorna el estado de la lista.
+     *
+     * @return boolean - true si está vacia
+     */
     @Override
     public boolean estaVacia() {
         return nodoHead == null;
     }
 
     /**
-    * Retorna un String con todos los elementos contenidos en la lista.
-    * @return String - elementos de la lista
-    */
+     * Retorna un String con todos los elementos contenidos en la lista.
+     *
+     * @return String - elementos de la lista
+     */
     @Override
     public String toString() {
         if (!estaVacia()) {
@@ -519,32 +588,32 @@ public class ListaSimple<E> implements Lista<E> {
             return "";
         }
     }
-
+    
     protected class NodoSimple<E> {
-
+        
         E dato;
         NodoSimple<E> siguiente;
-
+        
         public NodoSimple(E dato) {
             this.dato = dato;
         }
-
+        
         public E getDato() {
             return dato;
         }
-
+        
         public void setDato(E dato) {
             this.dato = dato;
         }
-
+        
         public NodoSimple<E> getSiguiente() {
             return siguiente;
         }
-
+        
         public void setSiguiente(NodoSimple<E> siguiente) {
             this.siguiente = siguiente;
         }
-
+        
         @Override
         public String toString() {
             return "" + dato;
