@@ -43,6 +43,7 @@ public class ListaSimple<E> implements Lista<E> {
                     //El nodo siguiente al actual será remplazado con los mismos de antes agregando el nodo
                     //indicado al inicio
                     nodo_actual.siguiente = nodo_entrada;
+                    break;
                 }
                 nodo_actual = nodo_actual.siguiente;
                 index++;
@@ -108,6 +109,7 @@ public class ListaSimple<E> implements Lista<E> {
                         } else {
                             eliminarInicial();
                         }
+                        break;
                     }
                     nodo_preActual = nodo_actual;
                     nodo_actual = nodo_actual.siguiente;
@@ -516,7 +518,6 @@ public class ListaSimple<E> implements Lista<E> {
         } else {
             return "";
         }
-
     }
 
     protected class NodoSimple<E> {

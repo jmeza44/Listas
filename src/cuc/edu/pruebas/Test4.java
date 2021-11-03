@@ -1,19 +1,18 @@
 package cuc.edu.pruebas;
 
-import cuc.edu.listas.ListaSimple;
+import cuc.edu.listas.ListaDoble;
 
-public class Test2 {
-
+public class Test4 {
     public static void main(String[] args) {
-        /*Prueba de métodos de listas simples para una lista con elementos repetidos
+        /*Prueba de métodos de listas dobles para una lista con elementos repetidos
         Métodos probados: mostrar el total de apariciones de un elemento, eliminar
         por dato y por posición todos los elementos iguales, buscar todas la posiciones en las
         que aparece un dato.*/
-
-        ListaSimple<Integer> numeros = new ListaSimple<>();
+        
+        ListaDoble<Integer> numeros = new ListaDoble<>();
         Integer a = 1;
         int b = 2;
-
+        
         //Adición
         System.out.println(">> Adicionando ([1, 1, 1, 2, 1, 3, 3, 1, 5, 1, 1, 6, 2, 3, 5])...");
         numeros.adicionarElemento(1);
@@ -33,7 +32,7 @@ public class Test2 {
         numeros.adicionarElemento(5);
         System.out.println("Números: " + numeros.toString());
         System.out.println("Elementos contenidos: " + numeros.longitud());
-
+        
         //Informacion
         System.out.println("\n>> Mostrando el número de apariciones de un dato (Num1)...");
         System.out.println("Apariciones: " + numeros.apariciones(a));
@@ -41,7 +40,7 @@ public class Test2 {
         //Búsqueda
         System.out.println("\n>> Mostrando una lista con todas las posciciones en las que aparece un dato (Num1)...");
         System.out.println("Lista de apariciones: " + numeros.buscarTodos(a));
-
+        
         //Eliminación
         System.out.println("\n>> Eliminando todas las apariciones de un dato (Num1)...");
         System.out.println("Números antes: " + numeros.toString() + " Longitud: " + numeros.longitud());
