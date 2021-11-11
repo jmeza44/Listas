@@ -34,6 +34,8 @@ public interface Lista<E> {
     E buscarPreFinal();
 
     E buscarFinal();
+    
+    E buscarIntermedio();
 
     ListaSimple<Integer> buscarTodos(E dato);
 
@@ -50,5 +52,7 @@ public interface Lista<E> {
 
     int longitud();
 
+    boolean comparar(ListaSimple<E> lista);
+    
     boolean estaVacia();
 }

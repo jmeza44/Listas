@@ -423,11 +423,17 @@ public class ListaDoble<E> extends ListaSimple<E> {
         }
     }
 
+    @Override
+    public E buscarIntermedio() {
+        return buscar(longitud() / 2); //longitud()/2 da como resultado un entero
+        //Ejemplo: 5/2 = 2
+    }
+
     /**
      * Busca todas las posiciones en las que se encuentra un elemento.
      *
      * @param dato Object - dato a buscar
-     * @return ListaSimple<Integer> - posiciones
+     * @return ListaSimple - posiciones
      */
     @Override
     public ListaSimple buscarTodos(E dato) {

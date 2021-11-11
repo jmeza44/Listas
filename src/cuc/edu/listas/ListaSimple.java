@@ -1,7 +1,7 @@
 package cuc.edu.listas;
 
 public class ListaSimple<E> implements Lista<E> {
-    
+
     protected NodoSimple<E> nodoHead;
 
     //Adicionar
@@ -135,9 +135,9 @@ public class ListaSimple<E> implements Lista<E> {
     public void eliminarElemento(int posicion, boolean eliminar_todos) {
         if (!estaVacia()) {
             if (posicion < 0) {
-                
+
             } else if (posicion >= longitud()) {
-                
+
             } else if (posicion == 0) {
                 eliminarInicial();
             } else {
@@ -229,17 +229,18 @@ public class ListaSimple<E> implements Lista<E> {
      */
     @Override
     public void eliminarUltimo() {
-        NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
-        NodoSimple<E> nodo_preActual = null; //Nodo previo al recorredor (Pointer)
-        while (nodo_actual.siguiente != null) {
-            nodo_preActual = nodo_actual;
-            nodo_actual = nodo_actual.siguiente;
-        }
-        if (nodo_preActual != null) {
-            nodo_preActual.siguiente = null;
-        }
         if (!estaVacia()) {
-            
+            NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
+            NodoSimple<E> nodo_preActual = null; //Nodo previo al recorredor (Pointer)
+            while (nodo_actual.siguiente != null) {
+                nodo_preActual = nodo_actual;
+                nodo_actual = nodo_actual.siguiente;
+            }
+            if (nodo_preActual != null) {
+                nodo_preActual.siguiente = null;
+            } else {
+                eliminarInicial();
+            }
         }
     }
 
@@ -356,7 +357,7 @@ public class ListaSimple<E> implements Lista<E> {
             while (nodo_actual.siguiente != null) { //Hasta el último nodo
                 nodo_preActual = nodo_actual;
                 nodo_actual = nodo_actual.siguiente;
-                
+
             }
             if (nodo_preActual != null) {
                 return nodo_preActual.dato;
@@ -383,6 +384,16 @@ public class ListaSimple<E> implements Lista<E> {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Busca el dato intermedio en una lista.
+     * @return Object en la posición intermedia
+     */
+    @Override
+    public E buscarIntermedio() {
+        return buscar(longitud() / 2); //longitud()/2 da como resultado un entero
+        //Ejemplo: 5/2 = 2
     }
 
     /**
@@ -501,7 +512,7 @@ public class ListaSimple<E> implements Lista<E> {
                 NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
                 NodoSimple<E> nodo_preActual = null; //Nodo previo al recorredor (Pointer)
                 int index = 0;
-                
+
                 nodoY.siguiente = nodoHead.siguiente; //El los nodos siguientes a Y son remplazados con los siguientes al Head
                 nodoHead = nodoY; //El nodo Head es remplazado con el nodo Y
                 while (index < posicionY) { //Hasta llegar al nodoY en la lista
@@ -558,6 +569,76 @@ public class ListaSimple<E> implements Lista<E> {
     }
 
     /**
+     * Compara dos listas simples y determina si son iguales dependiendo de la
+     * cantidad de elementos contenidos en ellas y los propios elementos.
+     *
+     * @param lista - ListaSimple
+     * @return boolean - true si las listas son iguales
+     */
+    @Override
+    public boolean comparar(ListaSimple<E> lista) {
+        if (this.longitud() == lista.longitud()) { //Si tienen la misma longitud
+            for (int i = 0; i < this.longitud(); i++) { //Recorrido de las listas
+                if (!this.buscar(i).equals(lista.buscar(i))) { //Compara los datos en la posición i en cada lista
+                    return false; //Si alguno de los dato no es igual a su correspondiente en la otra lista
+                }
+            }
+            return true; //Si todos son iguales
+        } else {
+            return false; //Sino tienen la misma longitud
+        }
+    }
+
+    /**
+     * Determina si una lista está contenida en otra.
+     *
+     * @param lista ListaSimple - lista mayor
+     * @return boolean - true si la lista que llama al método está contenida en
+     * la lista especificada
+     */
+    public boolean continidaEn(ListaSimple<E> lista) {
+        for (int i = 0; i < this.longitud(); i++) { //Recorrido de la sub-lista
+            if (!lista.buscar(i).equals(this.buscar(i))) { //Compara los datos de la sub-lista con los de la lista en i
+                return false; //Si algún dato es distinto (No está contenida)
+            }
+        }
+        return true; //Si se completó el recorrido de la sub-lista y todos los elementos en las posiciones indicadas
+        //Están en la lista (Está contenida)
+    }
+
+    /**
+     * Determina si el número resultante de concatenar los números de una lista
+     * de Integer's es divisible entre once. Ejemplo: [5,1,4,8], el resultado de
+     * la concatenación de estos números es 5148, si 5+4=1+8 es divisible entre
+     * once.
+     *
+     * @return boolean - true si es divisible entre once
+     */
+    public boolean divisibleOnce() {
+        if (!estaVacia()) {
+            try {
+                int suma_prev = 0; //Guarda el valor correspondiente a la suma previa
+                for (int i = 0; i < longitud() - 2; i++) { //Hasta dos posiciones antes del final de la lista
+                    int dato_uno = Integer.parseInt(buscar(i).toString()); //Dato en la posición i
+                    int dato_dos = Integer.parseInt(buscar(i + 2).toString()); //Dato dos posiciones adelante
+
+                    if (i != 0 && dato_uno + dato_dos != suma_prev) {
+                        //Retorna falso en el momento en que la suma de los datos deja de ser igual a
+                        //los resultados anteriores
+                        return false;
+                    }
+                    suma_prev = dato_uno + dato_dos;
+                }
+                return true; //Si todas las sumas tuvieron el mismo resultado
+            } catch (NumberFormatException ex) {
+                return false; //Si la lista contiene datos != de Integer's
+            }
+        } else {
+            return false; //Si la list está vacia
+        }
+    }
+
+    /**
      * Retorna el estado de la lista.
      *
      * @return boolean - true si está vacia
@@ -588,32 +669,32 @@ public class ListaSimple<E> implements Lista<E> {
             return "";
         }
     }
-    
+
     protected class NodoSimple<E> {
-        
+
         E dato;
         NodoSimple<E> siguiente;
-        
+
         public NodoSimple(E dato) {
             this.dato = dato;
         }
-        
+
         public E getDato() {
             return dato;
         }
-        
+
         public void setDato(E dato) {
             this.dato = dato;
         }
-        
+
         public NodoSimple<E> getSiguiente() {
             return siguiente;
         }
-        
+
         public void setSiguiente(NodoSimple<E> siguiente) {
             this.siguiente = siguiente;
         }
-        
+
         @Override
         public String toString() {
             return "" + dato;

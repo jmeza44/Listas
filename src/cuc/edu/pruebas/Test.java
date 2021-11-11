@@ -10,9 +10,12 @@ public class Test {
         adicionar al inicio y al final, eliminar una vez, eliminar por posicion una vez,
         eliminar en un intervalo de posiciones, eliminar al inicio y al final, buscar por dato,
         buscar por posición, buscar por intervalo de posiciones, buscar penúltimo y pultimo, 
-        mover un elemento de una posición X a una Y.*/
+        mover un elemento de una posición X a una Y, comparar una lista con otra especificada,
+        verificar si una lista está contenida en otra, determina si una lista de Integer's es
+        divisible entre once.*/
         
         ListaSimple<Integer> numeros = new ListaSimple<>();
+        ListaSimple<Integer> numeros2 = new ListaSimple<>();
         Integer a = 2020;
         int b =8;
         
@@ -97,5 +100,18 @@ public class Test {
         System.out.println("Números antes: " + numeros.toString());
         numeros.mover(0, 4);
         System.out.println("Números después: " + numeros.toString());
+        
+        System.out.println("\n>> Creando una lista y adicionandole elementos ([5,8,4,1,5])...");
+        numeros2.adicionarElemento(5);
+        numeros2.adicionarElemento(8);
+        numeros2.adicionarElemento(4);
+        numeros2.adicionarElemento(1);
+        numeros2.adicionarElemento(5);
+        
+        System.out.println("Números: " + numeros.toString() + "\nNúmeros 2: " + numeros2.toString());
+        System.out.println("¿Iguales?: " + numeros.comparar(numeros2));
+        System.out.println("¿Está números 2 contenida en números?: " + numeros2.continidaEn(numeros));
+        System.out.println("¿Divisible entre 11?: " + numeros2.divisibleOnce());
+        System.out.println("Dato intermedio: " + numeros2.buscarIntermedio());
     }
 }
