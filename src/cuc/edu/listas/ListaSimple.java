@@ -28,13 +28,9 @@ public class ListaSimple<E> implements Lista<E> {
      */
     @Override
     public void adicionarElemento(E dato, int posicion) {
-        if (posicion < 0) { //Si la posición no es valida
-
-        } else if (posicion > longitud()) { //Si la lista contiene no algo en la posición
-
-        } else if (posicion == 0) {
+        if (posicion == 0) {
             adicionarInicio(dato);
-        } else {
+        } else if (posicion > 0 && posicion < longitud()) {
             NodoSimple<E> nodo_entrada = new NodoSimple<>(dato); //Crea un nodo con el parametro
             NodoSimple<E> nodo_actual = nodoHead; //Nodo recorredor (Pointer)
             int index = 0; //Indica la posición durante el recorrido
@@ -88,6 +84,18 @@ public class ListaSimple<E> implements Lista<E> {
             NodoSimple<E> nodo_entrada = new NodoSimple<>(dato); //Crea un nodo con el parametro
             nodoHead = nodo_entrada; //Asigna el nodo como Head
         }
+    }
+
+    /**
+     * Adiciona un elemento en la posición siguiente al dato indicado, es decir,
+     * si el dato existe en la lista lo adiciona justo después de la primera
+     * aparición de este. Si el dato no está en la lista adiciona el elemento al
+     * inicio.
+     *
+     * @param dato - Objecto dato a adicionar
+     */
+    public void adicionarAgrupado(E dato) {
+        this.adicionarElemento(dato, this.buscar(dato) + 1);
     }
 
     //Eliminar
@@ -388,6 +396,7 @@ public class ListaSimple<E> implements Lista<E> {
 
     /**
      * Busca el dato intermedio en una lista.
+     *
      * @return Object en la posición intermedia
      */
     @Override
