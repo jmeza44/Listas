@@ -1,6 +1,7 @@
 package cuc.edu.pruebas;
 
 import cuc.edu.listas.ListaDoble;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TestSumaListas {
@@ -9,29 +10,33 @@ public class TestSumaListas {
 
         ListaDoble<Integer> numero_uno = new ListaDoble<>();
         ListaDoble<Integer> numero_dos = new ListaDoble<>();
-        ListaDoble<Integer> numero_reslt = new ListaDoble<>();
+        ListaDoble<Integer> numero_reslt;
         Scanner scanner_int = new Scanner(System.in);
 
-        System.out.println(">> Solo funcionando para dos números con la misma cantidad de dígitos<<\n");
-        System.out.println(">> Ingrese el número 1 a sumar: ");
-        int num = scanner_int.nextInt();
-        String number = String.valueOf(num);
-        char[] digits = number.toCharArray();
-        for (int i = 0; i < digits.length; i++) {
-            numero_uno.adicionarElemento(Character.getNumericValue(digits[i]));
-        }
-        System.out.println(numero_uno);
+        try {
+            System.out.println(">> Ingrese el número 1 a sumar: ");
+            int num = scanner_int.nextInt();
+            String number = String.valueOf(num);
+            char[] digits = number.toCharArray();
+            for (int i = 0; i < digits.length; i++) {
+                numero_uno.adicionarElemento(Character.getNumericValue(digits[i]));
+            }
+            System.out.println(numero_uno);
 
-        System.out.println(">> Ingrese el número 2 a sumar: ");
-        num = scanner_int.nextInt();
-        number = String.valueOf(num);
-        digits = number.toCharArray();
-        for (int i = 0; i < digits.length; i++) {
-            numero_dos.adicionarElemento(Character.getNumericValue(digits[i]));
+            System.out.println(">> Ingrese el número 2 a sumar: ");
+            num = scanner_int.nextInt();
+            number = String.valueOf(num);
+            digits = number.toCharArray();
+            for (int i = 0; i < digits.length; i++) {
+                numero_dos.adicionarElemento(Character.getNumericValue(digits[i]));
+            }
+            System.out.println(numero_dos);
+        } catch (InputMismatchException ex) {
+            System.out.println("Input error");
         }
-        System.out.println(numero_dos);
+        numero_reslt = sumar(numero_uno, numero_dos);
 
-        System.out.println("Resultado: " + sumar(numero_uno, numero_dos));
+        System.out.println("Resultado: " + numero_reslt);
     }
 
     public static ListaDoble<Integer> sumar(ListaDoble<Integer> numero_uno, ListaDoble<Integer> numero_dos) {

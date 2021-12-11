@@ -10,17 +10,21 @@ public interface Lista<E> {
     void adicionarInicio(E dato);
 
     void adicionarFinal(E dato);
+    
+    void adicionarAgrupando(E dato);
 
     //Eliminar elementos
-    void eliminarElemento(E dato, boolean eliminar_todos);
+    void eliminarElemento(E dato, boolean eliminarTodos);
 
-    void eliminarElemento(int posicion, boolean eliminar_todos); //Posible incompatibilidad
+    void eliminarElemento(int posicion, boolean eliminarTodos);
 
     void eliminarElemento(int posicionX, int posicionY);
 
     void eliminarInicial();
 
     void eliminarUltimo();
+    
+    void eliminarElemento(E dato, int aparicion);
 
     //Buscar elementos
     int buscar(E dato);
@@ -40,9 +44,9 @@ public interface Lista<E> {
     ListaSimple<Integer> buscarTodos(E dato);
 
     //Sustituir elementos
-    void sustituir(E dato_sustituir, E dato_sustituto, boolean sustituir_todos);
+    void sustituir(E datoSustituir, E datoSustituto, boolean sustituirTodos);
 
-    void sustituir(int posicio, E dato_sustituto, boolean sustituir_todos);
+    void sustituir(int posicion, E datoSustituto, boolean sustituirTodos);
 
     //Mover elementos
     void mover(int posicionX, int posicionY);
@@ -55,4 +59,9 @@ public interface Lista<E> {
     boolean comparar(ListaSimple<E> lista);
     
     boolean estaVacia();
+    
+    //Serialización
+    void serializar(String nombreArchivo);
+    
+    ListaSimple<E> deserializar(String nombreArchivo);
 }

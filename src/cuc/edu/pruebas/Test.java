@@ -113,5 +113,6 @@ public class Test {
         System.out.println("¿Está números 2 contenida en números?: " + numeros2.continidaEn(numeros));
         System.out.println("¿Divisible entre 11?: " + numeros2.divisibleOnce());
         System.out.println("Dato intermedio: " + numeros2.buscarIntermedio());
+        
     }
 }

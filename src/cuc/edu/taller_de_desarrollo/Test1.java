@@ -2,7 +2,7 @@ package cuc.edu.taller_de_desarrollo;
 
 import cuc.edu.listas.ListaSimple;
 
-public class test {
+public class Test1 {
     
     public static void main(String[] args) {
         ListaSimple<Integer> numeros1 = new ListaSimple<>();
@@ -36,17 +36,17 @@ public class test {
         System.out.println("Elementos contenidos: " + numeros3.longitud());
         
         System.out.println("\n>> Adicionando en agrupación en números 1 (Num2)...");
-        numeros1.adicionarAgrupado(2);
+        numeros1.adicionarAgrupando(2);
         System.out.println("Números 1: " + numeros1.toString());
         System.out.println("Elementos contenidos: " + numeros1.longitud());
         
         System.out.println("\n>> Adicionando en agrupación en números 2 (Num5)...");
-        numeros2.adicionarAgrupado(5);
+        numeros2.adicionarAgrupando(5);
         System.out.println("Números 2: " + numeros2.toString());
         System.out.println("Elementos contenidos: " + numeros2.longitud());
         
         System.out.println("\n>> Adicionando en agrupación en números 3 (Num1)...");
-        numeros3.adicionarAgrupado(1);
+        numeros3.adicionarAgrupando(1);
         System.out.println("Números 3: " + numeros3.toString());
         System.out.println("Elementos contenidos: " + numeros3.longitud());
     }
